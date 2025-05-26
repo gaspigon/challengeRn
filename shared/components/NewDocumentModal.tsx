@@ -59,9 +59,11 @@ export const NewDocumentModal = ({ visible, onClose }: Props) => {
             </TouchableOpacity>
         </View>
 
+        <View style={styles.footer}>
         <TouchableOpacity style={styles.submitButton}>
           <Text style={styles.submitText}>Submit</Text>
         </TouchableOpacity>
+        </View>
       </View>
     </Modal>
   );
@@ -78,6 +80,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     minHeight: "50%",
+    paddingBottom: 0, 
   },
   header: {
     flexDirection: "row",
@@ -118,6 +121,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: "center",
     width: "35%",
+    marginBottom: 15,
   },
   fileText: {
     color: "#3478f6",
@@ -125,9 +129,8 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   submitButton: {
-    marginTop: 24,
     backgroundColor: "#3478f6",
-    paddingVertical: 14,
+    paddingVertical: 12,
     borderRadius: 10,
     
   },
@@ -137,4 +140,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 16,
   },
+  footer: {
+  backgroundColor: "#f5f5f5",
+  paddingHorizontal: 20,
+  marginHorizontal: -20,  
+  borderTopWidth: 0.5,
+  borderTopColor: "#ccc",
+  paddingVertical: 15,
+
+},
 });
