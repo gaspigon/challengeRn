@@ -1,15 +1,19 @@
 // screens/HomeScreen.tsx
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../App";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { NewDocumentModal } from "@/shared/components/NewDocumentModal";
+
 
 type HomeNav = NativeStackNavigationProp<RootStackParamList, "Home">;
 
 export default function HomeScreen() {
   const navigation = useNavigation<HomeNav>();
+  const [showModal, setShowModal] = useState(false);
+
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -23,12 +27,13 @@ export default function HomeScreen() {
         <Text style={styles.placeholderText}>Aquí se mostrarán los documentos 📄</Text>
       </View>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("New")}
-      >
+      <TouchableOpacity style={styles.button} onPress={() => setShowModal(true)}>
         <Text style={styles.buttonText}>+ Add document</Text>
       </TouchableOpacity>
+
+      <NewDocumentModal visible={showModal} onClose={() => setShowModal(false)} />
+
+
     </View>
     </SafeAreaView>
   );

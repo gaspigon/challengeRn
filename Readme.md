@@ -53,3 +53,16 @@ shared/
   ├── store/
   ├── types/
   └── utils/
+
+  ✅ Project Progress
+✔️ Initial structure with navigation
+
+✔️ Home screen layout with header and add button
+
+❗ Modal and document logic will be added in next commits
+
+
+| Package                                     | Purpose                   
+| `@react-navigation/native` + `native-stack` | Navigation                
+| `react-native-safe-area-context`            | Safe area padding         
+| `expo-dev-client`                           | Native iOS/Android builds 
