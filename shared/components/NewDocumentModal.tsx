@@ -76,7 +76,7 @@ export const NewDocumentModal = ({ visible, onClose }: Props) => {
         </View>
 
         <View style={styles.footer}>
-        <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+        <TouchableOpacity style={styles.submitButton}>
           <Text style={styles.submitText}>Submit</Text>
         </TouchableOpacity>
         </View>

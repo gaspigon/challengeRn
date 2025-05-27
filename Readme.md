@@ -111,3 +111,19 @@ Example usage in a component:
 ```tsx
 const { documents, setDocuments, viewMode } = useDocumentStore();
 
+
+### Real-Time Notifications
+
+This app listens for document creation events sent by other users through a WebSocket connection.
+
+- **WebSocket endpoint**: `ws://localhost:8080/notifications`
+- Notifications are parsed and added to the local state via Zustand.
+- A modal is available from the Home screen (notification icon) to view all received notifications.
+- Each notification shows the user name, document title, and timestamp.
+- Notifications are stored in memory; closing and reopening the app resets them.
+
+**Dependencies added:**
+
+- `uuid`: Used for local document creation IDs (`react-native-uuid`)
+- `react-native-vector-icons/Ionicons`: Used to render the trash icon for removing individual notifications from the modal.
+

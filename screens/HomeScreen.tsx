@@ -8,12 +8,16 @@ import { useDocumentStore } from "@/shared/store/documents";
 import { FlatList, ActivityIndicator } from "react-native";
 import { DocumentCard } from "@/shared/components/DocumentCard";
 import { Ionicons } from "@expo/vector-icons"; 
+import { useWebSocket } from "@/shared/hooks/useWebSocket";
+import { NotificationModal } from "@/shared/components/NotificationModal";
 
 
 
 export default function HomeScreen() {
   const [showModal, setShowModal] = useState(false);
   const { documents, setDocuments, viewMode, toggleViewMode } = useDocumentStore();
+  const [showNotifications, setShowNotifications] = useState(false);
+  useWebSocket(); // Initialize WebSocket for notifications
 
 
 useEffect(() => {
@@ -36,6 +40,9 @@ useEffect(() => {
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff"}}>
       <View style={styles.header}>
         <Text style={styles.title}>Documents</Text>
+          <TouchableOpacity onPress={() => setShowNotifications(true)}>
+            <Ionicons name="notifications-outline" size={24} color="#3478f6" />
+          </TouchableOpacity>
       </View>
         <View style={styles.content}>
    <View style={styles.toggleContainer}>
@@ -93,6 +100,7 @@ useEffect(() => {
 
 
       <NewDocumentModal visible={showModal} onClose={() => setShowModal(false)} />
+      <NotificationModal visible={showNotifications}onClose={() => setShowNotifications(false)} />
         
 
       </View>
@@ -110,11 +118,13 @@ useEffect(() => {
 
 const styles = StyleSheet.create({
   container: { flex: 1, },
-  header: {
-    marginBottom: 16,
-  paddingHorizontal: 16, 
-  backgroundColor: "#fff",
-  },
+  header: { 
+  marginBottom: 16,
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+  paddingHorizontal: 16,
+},
   title: { fontSize: 24, fontWeight: "bold" },
   placeholder: {
     flex: 1,
