@@ -7,9 +7,10 @@ This project is part of a technical test for a React Native Developer position.
 - [Expo](https://expo.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [React Navigation](https://reactnavigation.org/)
-- [Zustand](https://github.com/pmndrs/zustand) – for global state
-- [Axios](https://axios-http.com/) – for HTTP requests
+- [Zustand](https://github.com/pmndrs/zustand) – Used for global state management (documents, view mode). Chosen for its simplicity and scalability over heavier options like Redux.
+- [Axios](https://axios-http.com/) – Used to simplify HTTP requests over the native `fetch` API. Enables interceptors and better error handling.
 - [Socket.IO Client](https://socket.io/docs/v4/client-api/) – for real-time notifications
+- `react-native-uuid` Used to generate unique IDs for newly created documents and contributors. Alternative: `uuid`, but `react-native-uuid` is  built with React Native compatibility in mind.
 
 ---
 
@@ -90,6 +91,9 @@ WebSocket: ws://localhost:8080/notifications
 
 
 ---
+## 📎 File Upload
+
+The `Choose file` button in the `Add Document` modal is included to match the mockup design. However, no actual file upload functionality is implemented, as the challenge does not require it and no API is provided for handling files.
 
 ## 🗃️ Global State Management
 

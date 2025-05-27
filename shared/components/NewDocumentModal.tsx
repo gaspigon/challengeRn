@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import Modal from "react-native-modal";
 import { Ionicons } from "@expo/vector-icons"; 
+import { useDocumentStore } from "@/shared/store/documents";
 
 interface Props {
   visible: boolean;
@@ -15,6 +16,19 @@ interface Props {
 }
 
 export const NewDocumentModal = ({ visible, onClose }: Props) => {
+  const [name, setName] = useState("");
+  const [version, setVersion] = useState("");
+  const addDocument = useDocumentStore((state) => state.addDocument);
+
+  const handleSubmit = () => {
+    if (name.trim() && version.trim()) {
+      addDocument(name.trim(), version.trim());
+      setName("");
+      setVersion("");
+      onClose();
+    }
+  }
+
   return (
     <Modal
       isVisible={visible}
@@ -36,18 +50,20 @@ export const NewDocumentModal = ({ visible, onClose }: Props) => {
         <View style={styles.formGroup}>
           <Text style={styles.label}>Name</Text>
           <TextInput
-            style={styles.input}
-            placeholder="Placeholder"
-            placeholderTextColor="#999"
-          />
+                placeholder="Name"
+                style={styles.input}
+                value={name}
+                onChangeText={setName}
+              />
         </View>
 
         <View style={styles.formGroup}>
           <Text style={styles.label}>Version</Text>
           <TextInput
+            placeholder="Version"
             style={styles.input}
-            placeholder="Placeholder"
-            placeholderTextColor="#999"
+            value={version}
+            onChangeText={setVersion}
           />
         </View>
 
@@ -60,7 +76,7 @@ export const NewDocumentModal = ({ visible, onClose }: Props) => {
         </View>
 
         <View style={styles.footer}>
-        <TouchableOpacity style={styles.submitButton}>
+        <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
           <Text style={styles.submitText}>Submit</Text>
         </TouchableOpacity>
         </View>
