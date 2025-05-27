@@ -87,3 +87,23 @@ By default, it runs at:
 HTTP: http://localhost:8080/documents
 
 WebSocket: ws://localhost:8080/notifications
+
+
+---
+
+## 🗃️ Global State Management
+
+The app uses [Zustand] for global state.
+
+The `useDocumentStore` hook handles:
+
+- `documents`: array of documents fetched from the backend
+- `setDocuments()`: method to populate the store
+- `viewMode`: list/grid toggle for UI display
+- `toggleViewMode()`: switches view mode
+
+Example usage in a component:
+
+```tsx
+const { documents, setDocuments, viewMode } = useDocumentStore();
+

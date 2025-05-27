@@ -7,20 +7,30 @@ import { RootStackParamList } from "../App";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { NewDocumentModal } from "@/shared/components/NewDocumentModal";
 import { getDocuments } from "@/shared/services/documentService";
+import { useDocumentStore } from "@/shared/store/documents";
 
 
-type HomeNav = NativeStackNavigationProp<RootStackParamList, "Home">;
 
 export default function HomeScreen() {
-  const navigation = useNavigation<HomeNav>();
   const [showModal, setShowModal] = useState(false);
+  const { documents, setDocuments } = useDocumentStore();
 
-  useEffect(() => {
-    //test to see if the API call works
-  getDocuments(); 
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const docs = await getDocuments();
+      setDocuments(docs);
+    } catch (err) {
+      console.error("Error loading documents:", err);
+    }
+  };
+
+  fetchData();
 }, []);
 
 
+  console.log("Documents in zustand", documents);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
