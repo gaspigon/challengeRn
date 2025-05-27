@@ -66,3 +66,24 @@ shared/
 | `@react-navigation/native` + `native-stack` | Navigation                
 | `react-native-safe-area-context`            | Safe area padding         
 | `expo-dev-client`                           | Native iOS/Android builds 
+
+
+---
+
+## 🔌 Backend Integration
+
+The app connects to a local backend provided with the challenge.
+
+### Backend Setup
+
+To run the backend server, make sure you have [Go] installed, then:
+
+```bash
+cd path/to/backend-repo
+go run server.go
+
+By default, it runs at:
+
+HTTP: http://localhost:8080/documents
+
+WebSocket: ws://localhost:8080/notifications

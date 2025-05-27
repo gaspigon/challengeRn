@@ -1,11 +1,12 @@
 // screens/HomeScreen.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../App";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { NewDocumentModal } from "@/shared/components/NewDocumentModal";
+import { getDocuments } from "@/shared/services/documentService";
 
 
 type HomeNav = NativeStackNavigationProp<RootStackParamList, "Home">;
@@ -13,6 +14,11 @@ type HomeNav = NativeStackNavigationProp<RootStackParamList, "Home">;
 export default function HomeScreen() {
   const navigation = useNavigation<HomeNav>();
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+  getDocuments(); 
+}, []);
+
 
 
   return (
