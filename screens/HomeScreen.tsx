@@ -1,19 +1,19 @@
 // screens/HomeScreen.tsx
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../App";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { NewDocumentModal } from "@/shared/components/NewDocumentModal";
 import { getDocuments } from "@/shared/services/documentService";
 import { useDocumentStore } from "@/shared/store/documents";
+import { FlatList, ActivityIndicator } from "react-native";
+import { DocumentCard } from "@/shared/components/DocumentCard";
+import { Ionicons } from "@expo/vector-icons"; 
 
 
 
 export default function HomeScreen() {
   const [showModal, setShowModal] = useState(false);
-  const { documents, setDocuments } = useDocumentStore();
+  const { documents, setDocuments, viewMode, toggleViewMode } = useDocumentStore();
 
 
 useEffect(() => {
@@ -30,36 +30,90 @@ useEffect(() => {
 }, []);
 
 
-  console.log("Documents in zustand", documents);
+
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-    <View style={styles.container}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff"}}>
       <View style={styles.header}>
         <Text style={styles.title}>Documents</Text>
-        {/* Futuras acciones: toggle, notificaciones */}
       </View>
+        <View style={styles.content}>
+   <View style={styles.toggleContainer}>
+  <TouchableOpacity
+    onPress={() => viewMode !== "list" && toggleViewMode()}
+    style={[
+      styles.toggleIconButton,
+      viewMode === "list" && styles.toggleIconButtonActiveLeft,
+    ]}
+  >
+    <Ionicons
+      name="list"
+      size={18}
+      color={viewMode === "list" ? "#3478f6" : "#888"}
+    />
+  </TouchableOpacity>
 
-      <View style={styles.placeholder}>
-        <Text style={styles.placeholderText}>Aquí se mostrarán los documentos 📄</Text>
-      </View>
+  <TouchableOpacity
+    onPress={() => viewMode !== "grid" && toggleViewMode()}
+    style={[
+      styles.toggleIconButton,
+      viewMode === "grid" && styles.toggleIconButtonActiveRight,
+    ]}
+  >
+    <Ionicons
+      name="grid-outline"
+      size={18}
+      color={viewMode === "grid" ? "#3478f6" : "#888"}
+    />
+  </TouchableOpacity>
+</View>
+        {documents.length === 0 ? (
+          <ActivityIndicator size="large" style={{ marginTop: 20 }} />
+        ) : (
+          <FlatList
+            data={documents}
+            key={viewMode} 
+            keyExtractor={(item) => item.ID}
+            renderItem={({ item }) => (
+              <DocumentCard document={item} mode={viewMode} />
+            )}
+            numColumns={viewMode === "grid" ? 2 : 1}
+            columnWrapperStyle={
+              viewMode === "grid" ? { justifyContent: "space-between" } : undefined
+            }
+            contentContainerStyle={{ paddingBottom: 120 }}
+            ListEmptyComponent={
+              <View style={styles.placeholder}>
+                <Text style={styles.placeholderText}>No documents found</Text>
+              </View>
+            }
+            showsVerticalScrollIndicator={false}
+          />
+        )}
 
-      <TouchableOpacity style={styles.button} onPress={() => setShowModal(true)}>
-        <Text style={styles.buttonText}>+ Add document</Text>
-      </TouchableOpacity>
 
       <NewDocumentModal visible={showModal} onClose={() => setShowModal(false)} />
+        
 
+      </View>
 
-    </View>
+      <View style={styles.boxButton}>
+        <TouchableOpacity style={styles.button} onPress={() => setShowModal(true)}>
+        <Text style={styles.buttonText}>+ Add document</Text>
+      </TouchableOpacity>
+        </View>
+  
     </SafeAreaView>
+ 
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16 },
+  container: { flex: 1, },
   header: {
     marginBottom: 16,
+  paddingHorizontal: 16, 
+  backgroundColor: "#fff",
   },
   title: { fontSize: 24, fontWeight: "bold" },
   placeholder: {
@@ -72,15 +126,62 @@ const styles = StyleSheet.create({
     color: "#888",
   },
   button: {
-    backgroundColor: "#3478f6",
-    paddingVertical: 14,
-    paddingHorizontal: 24,
-    borderRadius: 12,
-    marginBottom: 20,
+  marginTop:20,
+  backgroundColor: "#3478f6",
+  paddingVertical: 14,
+  borderRadius: 10,
+  alignItems: "center",
+  justifyContent: "center",
+
+
   },
   buttonText: {
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
   },
+  viewToggle: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    marginBottom: 12,
+  },
+  toggleContainer: {
+  flexDirection: "row",
+  borderWidth: 1,
+  borderColor: "#ccc",
+  borderRadius: 8,
+  overflow: "hidden",
+  width: '23%',
+  alignSelf: "flex-end",
+  marginBottom: 16,
+  marginTop: 10,
+},
+
+toggleIconButton: {
+  paddingVertical: 6,
+  paddingHorizontal: 12,
+  backgroundColor: "transparent",
+},
+
+toggleIconButtonActiveLeft: {
+  backgroundColor: "#fff",
+  borderRightWidth: 1,
+  borderRightColor: "#ccc",
+},
+
+toggleIconButtonActiveRight: {
+  backgroundColor: "#fff",
+},
+content: {
+  flex: 1,
+  backgroundColor: "#f5f5f5",
+  paddingHorizontal: 16,
+},
+boxButton: {
+  borderTopWidth: 1,
+  paddingHorizontal:10,
+  borderColor: "#ccc",
+  backgroundColor: "#f5f5f5"
+}
+
 });
