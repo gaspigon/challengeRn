@@ -10,6 +10,7 @@ import { DocumentCard } from "@/shared/components/DocumentCard";
 import { Ionicons } from "@expo/vector-icons"; 
 import { useWebSocket } from "@/shared/hooks/useWebSocket";
 import { NotificationModal } from "@/shared/components/NotificationModal";
+import { useNotificationStore } from "@/shared/store/notifications";
 
 
 
@@ -17,6 +18,7 @@ export default function HomeScreen() {
   const [showModal, setShowModal] = useState(false);
   const { documents, setDocuments, viewMode, toggleViewMode } = useDocumentStore();
   const [showNotifications, setShowNotifications] = useState(false);
+  const notifications = useNotificationStore((state) => state.notifications);
   useWebSocket(); // Initialize WebSocket for notifications
 
 
@@ -40,9 +42,24 @@ useEffect(() => {
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff"}}>
       <View style={styles.header}>
         <Text style={styles.title}>Documents</Text>
+        <View style={styles.notificationToggle}>
           <TouchableOpacity onPress={() => setShowNotifications(true)}>
             <Ionicons name="notifications-outline" size={24} color="#3478f6" />
+            {notifications.length > 0 && (
+              <View
+                style={{
+                  position: "absolute",
+                  top: -4,
+                  right: -4,
+                  backgroundColor: "#ff3b30",
+                  width: 10,
+                  height: 10,
+                  borderRadius: 5,
+                }}
+                />
+    )}
           </TouchableOpacity>
+          </View>
       </View>
         <View style={styles.content}>
    <View style={styles.toggleContainer}>
@@ -192,6 +209,15 @@ boxButton: {
   paddingHorizontal:10,
   borderColor: "#ccc",
   backgroundColor: "#f5f5f5"
-}
+},
+  notificationToggle: {
+       flexDirection: "row",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    overflow: "hidden",
+    padding: 6,
+    backgroundColor: "#fff",
+  },
 
 });
