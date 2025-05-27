@@ -16,6 +16,7 @@ export default function HomeScreen() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
+    //test to see if the API call works
   getDocuments(); 
 }, []);
 
