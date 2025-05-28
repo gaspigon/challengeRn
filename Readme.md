@@ -127,3 +127,17 @@ This app listens for document creation events sent by other users through a WebS
 - `uuid`: Used for local document creation IDs (`react-native-uuid`)
 - `react-native-vector-icons/Ionicons`: Used to render the trash icon for removing individual notifications from the modal.
 
+## 🖼️ Screenshots
+
+### Home Screen (List View)
+
+![List View](assets/cap3.png)
+
+### Home Screen (Grid View)
+
+![Grid View](assets/cap1.png)
+
+### New Document Modal
+![New Document Modal](assets/cap2.png)
+
+---

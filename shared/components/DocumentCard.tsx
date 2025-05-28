@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Document } from "@/shared/types/document";
+import { Ionicons } from "@expo/vector-icons"; 
 
 interface Props {
   document: Document;
@@ -26,7 +27,10 @@ export const DocumentCard = ({ document, mode }: Props) => {
   <View style={styles.metaRow}>
     {/* Contributors */}
     <View style={styles.metaColumn}>
+      <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 4 }}>
+        <Ionicons name="people-outline" size={14} color="#000" style={{ marginRight: 4 }} />
       <Text style={styles.label}>Contributors</Text>
+    </View>
       {document.Contributors.map((c) => (
         <Text style={styles.text} key={c.ID}>
           {c.Name}
@@ -36,7 +40,10 @@ export const DocumentCard = ({ document, mode }: Props) => {
 
     {/* Attachments */}
     <View style={styles.metaColumn}>
-      <Text style={styles.label}>Attachments</Text>
+      <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 4 }}>
+        <Ionicons name="attach-outline" size={14} color="#000" style={{ marginRight: 4 }} />
+        <Text style={styles.label}>Attachments</Text>
+    </View>
       {document.Attachments.map((a, i) => (
         <Text key={i} style={styles.text}>
           {a}
