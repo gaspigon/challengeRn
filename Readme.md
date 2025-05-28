@@ -141,3 +141,7 @@ This app listens for document creation events sent by other users through a WebS
 ![New Document Modal](assets/cap2.png)
 
 ---
+
+👤 Author
+Gaspar Gonzalez Mediavilla
+📧 gaspi-gonzalez@hotmail.com
